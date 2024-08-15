@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch Commands</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #9147ff;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #search {
+            padding: 10px;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .command-list {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .command {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .command:last-child {
+            border-bottom: none;
+        }
+        .command-name {
+            font-weight: bold;
+            color: #9147ff;
+        }
+        .command-description {
+            margin-top: 5px;
+        }
+        @media (max-width: 768px) {
+            #search {
+                width: 90%;
+                max-width: none;
+            }
+            .command-list {
+                width: 90%;
+                max-width: none;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Twitch Commands</h1>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search commands...">
+    </div>
+    <div class="command-list">
+        <div class="command">
+            <span class="command-name">!rank</span>
+            <p class="command-description">Shows which rank I am in Valorant.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!crosshair</span>
+            <p class="command-description">Shows the crosshair I'm using in Valorant.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!discord</span>
+            <p class="command-description">Gives a link to my Discord server.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!lurk</span>
+            <p class="command-description">Tells me that you are lurking in the stream.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!pc</span>
+            <p class="command-description">Shows my PC specs.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!setup</span>
+            <p class="command-description">Shows the gear I use for my setup.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!socials</span>
+            <p class="command-description">Gives a link to all my socials via Linktree.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!song</span>
+            <p class="command-description">Tells which song we are listening to.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!link</span>
+            <p class="command-description">Provides a link to the current song.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!queue</span>
+            <p class="command-description">Lets you queue the next song on Spotify.</p>
+        </div>
+        <div class="command">
+            <span class="command-name">!nextqueue</span>
+            <p class="command-description">Displays the next song in the queue.</p>
+        </div>
+    </div>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        let searchValue = this.value.toLowerCase();
+        let commands = document.querySelectorAll('.command');
+        commands.forEach(function(command) {
+            let commandName = command.querySelector('.command-name').textContent.toLowerCase();
+            let commandDescription = command.querySelector('.command-description').textContent.toLowerCase();
+            if (commandName.includes(searchValue) || commandDescription.includes(searchValue)) {
+                command.style.display = '';
+            } else {
+                command.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
