@@ -7,140 +7,222 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background: linear-gradient(to bottom, #ff9f00, #ff4c4c); /* Darker sunset gradient */
             color: #333;
             margin: 0;
             padding: 20px;
+            overflow: hidden; /* Prevent body from scrolling */
+            height: 100vh; /* Full viewport height */
+            position: relative; /* Allow z-index to work properly */
         }
         h1 {
             text-align: center;
-            color: #9147ff;
+            color: #fff; /* Light text for contrast */
             margin-bottom: 20px;
+            z-index: 2; /* Ensure heading is above the background */
+            position: relative;
         }
-        .search-container {
+        .control-container {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            gap: 10px;
+            z-index: 2; /* Ensure controls are above the background */
+            position: relative;
         }
-        #search {
+        #search, #groupSelect {
             padding: 10px;
-            width: 100%;
-            max-width: 600px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
             box-sizing: border-box;
+            background-color: #fff; /* White background for inputs */
+            transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
         }
-        .command-list {
+        #search:hover, #groupSelect:hover {
+            background-color: #ffecb3; /* Light yellow background on hover */
+            border-color: #ffb600; /* Match the border color with the theme */
+        }
+        #groupSelect {
+            max-width: 150px;
+        }
+        .command-list-container {
             max-width: 600px;
             margin: 0 auto;
+            height: 500px; /* Set a fixed height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            position: relative; /* Ensure it is above background */
+            z-index: 2; /* Ensure it stays on top of the background */
+        }
+        .category {
+            margin-top: 20px;
+        }
+        .category-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff; /* Light text for contrast */
+            background-color: #ff6f61; /* Softer sunset orange */
             padding: 10px;
-            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .command-list {
+            background-color: #fff; /* White background for the command list */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .command {
             padding: 10px;
             border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s; /* Smooth transition */
         }
         .command:last-child {
             border-bottom: none;
         }
+        .command:hover {
+            background-color: #ffe0b2; /* Light orange background on hover */
+        }
         .command-name {
             font-weight: bold;
-            color: #9147ff;
+            color: #ff6f61; /* Softer sunset orange */
         }
         .command-description {
             margin-top: 5px;
+            color: #666; /* Darker but softer text for descriptions */
         }
         @media (max-width: 768px) {
-            #search {
+            #search, #groupSelect {
                 width: 90%;
                 max-width: none;
             }
-            .command-list {
+            .command-list-container {
                 width: 90%;
                 max-width: none;
                 margin: 0 auto;
             }
         }
-        </style>
+    </style>
 </head>
 <body>
     <h1>Twitch Commands</h1>
-    <div class="search-container">
+    <div class="control-container">
         <input type="text" id="search" placeholder="Search commands...">
+        <select id="groupSelect">
+            <option value="">All Groups</option>
+            <option value="twitch">Twitch Commands</option>
+            <option value="song">Song Commands</option>
+            <option value="setup">Setup Commands</option>
+            <option value="socials">Social Commands</option>
+            <option value="valorant">Valorant Commands</option>
+        </select>
     </div>
-    <div class="command-list">
-        <div class="command">
-            <span class="command-name">!rank</span>
-            <p class="command-description">Shows which rank I am in Valorant.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!crosshair</span>
-            <p class="command-description">Shows the crosshair I'm using in Valorant.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!discord</span>
-            <p class="command-description">Gives a link to my Discord server.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!lurk</span>
-            <p class="command-description">Tells me that you are lurking in the stream.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!followage</span>
-            <p class="command-description">Displays the next song in the queue.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!watchtime</span>
-            <p class="command-description">Displays the next song in the queue.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!pc</span>
-            <p class="command-description">Shows my PC specs.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!setup</span>
-            <p class="command-description">Shows the gear I use for my setup.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!socials</span>
-            <p class="command-description">Gives a link to all my socials via Linktree.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!song</span>
-            <p class="command-description">Tells which song we are listening to.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!link</span>
-            <p class="command-description">Provides a link to the current song.</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!queue</span>
-            <p class="command-description">lets you queue songs (!queue artist name song name)</p>
-        </div>
-        <div class="command">
-            <span class="command-name">!nextqueue</span>
-            <p class="command-description">Displays the next song in the queue.</p>
+    <div class="command-list-container">
+        <div class="command-list" id="commandList">
+            <!-- Twitch Commands -->
+            <div class="category" data-group="twitch">
+                <div class="category-title">Twitch Commands</div>
+                <div class="command">
+                    <span class="command-name">!lurk</span>
+                    <p class="command-description">Indicates that you are lurking in the stream without actively participating in the chat.</p>
+                </div>
+                <div class="command">
+                    <span class="command-name">!followage</span>
+                    <p class="command-description">Displays how long you have been following the channel.</p>
+                </div>
+                <div class="command">
+                    <span class="command-name">!watchtime</span>
+                    <p class="command-description">Shows how long you have been watching the channel.</p>
+                </div>
+            </div>
+            <!-- Song Commands -->
+            <div class="category" data-group="song">
+                <div class="category-title">Song Commands</div>
+                <div class="command">
+                    <span class="command-name">!song</span>
+                    <p class="command-description">Provides details about the current song, including the song title, artist name, and a direct link to listen to it.</p>
+                </div>
+                <div class="command">
+                    <span class="command-name">!next</span>
+                    <p class="command-description">Reveals the next song that will play in the queue.</p>
+                </div>
+                <div class="command">
+                    <span class="command-name">!pos</span>
+                    <p class="command-description">Shows the position of your song request in the current queue.</p>
+                </div>
+            </div>
+            <!-- Setup Commands -->
+            <div class="category" data-group="setup">
+                <div class="category-title">Setup Commands</div>
+                <div class="command">
+                    <span class="command-name">!pc</span>
+                    <p class="command-description">Lists the specifications and components of my current PC setup.</p>
+                </div>
+                <div class="command">
+                    <span class="command-name">!setup</span>
+                    <p class="command-description">Details the gear and equipment used in my gaming setup.</p>
+                </div>
+            </div>
+            <!-- Social Commands -->
+            <div class="category" data-group="socials">
+                <div class="category-title">Social Commands</div>
+                <div class="command">
+                    <span class="command-name">!discord</span>
+                    <p class="command-description">Provides a link to join my Discord server where you can interact with the community.</p>
+                </div>
+                <div class="command">
+                    <span class="command-name">!socials</span>
+                    <p class="command-description">Provides links to all my social media profiles.</p>
+                </div>
+            </div>
+            <!-- Valorant Commands -->
+            <div class="category" data-group="valorant">
+                <div class="category-title">Valorant Commands</div>
+                <div class="command">
+                    <span class="command-name">!rank</span>
+                    <p class="command-description">Displays my current rank in Valorant.</p>
+                </div>
+                <div class="command">
+                    <span class="command-name">!crosshair</span>
+                    <p class="command-description">Shows the crosshair settings I am using in Valorant.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-<script>
-    document.getElementById('search').addEventListener('input', function() {
-        let searchValue = this.value.toLowerCase();
-        let commands = document.querySelectorAll('.command');
-        commands.forEach(function(command) {
-            let commandName = command.querySelector('.command-name').textContent.toLowerCase();
-            let commandDescription = command.querySelector('.command-description').textContent.toLowerCase();
-            if (commandName.includes(searchValue) || commandDescription.includes(searchValue)) {
-                command.style.display = '';
-            } else {
-                command.style.display = 'none';
-            }
+    <script>
+        function filterCommandsByGroup() {
+            const selectedGroup = document.getElementById('groupSelect').value;
+            const categories = document.querySelectorAll('.category');
+            
+            categories.forEach(category => {
+                const group = category.getAttribute('data-group');
+                if (selectedGroup === "" || group === selectedGroup) {
+                    category.style.display = '';
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter commands when the dropdown selection changes
+        document.getElementById('groupSelect').addEventListener('change', filterCommandsByGroup);
+
+        // Search functionality
+        document.getElementById('search').addEventListener('input', function() {
+            let searchValue = this.value.toLowerCase();
+            let commands = document.querySelectorAll('.command');
+            commands.forEach(function(command) {
+                let commandName = command.querySelector('.command-name').textContent.toLowerCase();
+                let commandDescription = command.querySelector('.command-description').textContent.toLowerCase();
+                if (commandName.includes(searchValue) || commandDescription.includes(searchValue)) {
+                    command.style.display = '';
+                } else {
+                    command.style.display = 'none';
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>
